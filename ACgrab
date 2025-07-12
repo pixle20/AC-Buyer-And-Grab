@@ -1,0 +1,32 @@
+using UnityEngine;
+
+public class AnimalGrab : MonoBehaviour
+{
+    private bool isDragging = false;
+    private Vector3 offset;
+    private float zCoord;
+
+    void OnTriggerDown()
+    {
+        isDragging = true;
+        zCoord = Camera.main.WorldToScreenPoint(transform.position).z;
+        Vector3 TriggerPoint = Input.TriggerPosition;
+        TriggerPoint.z = zCoord;
+        offset = transform.position - Camera.main.ScreenToWorldPoint(TriggerPoint);
+    }
+
+    void OnTriggerUp()
+    {
+        isDragging = false;
+    }
+
+    void Update()
+    {
+        if (isDragging)
+        {
+            Vector3 mousePoint = Input.mousePosition;
+            mousePoint.z = zCoord;
+            transform.position = Camera.main.ScreenToWorldPoint(mousePoint) + offset;
+        }
+    }
+}

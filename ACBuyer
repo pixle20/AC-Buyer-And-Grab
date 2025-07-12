@@ -1,0 +1,32 @@
+using UnityEngine;
+
+public class AnimalBuyer : MonoBehaviour
+{
+    public int money = 100; // Player's starting money
+    public GameObject Prefab; // Drag your Object prefab here
+    public Transform spawnPoint; // Position where Object spawns
+
+    public int animalCost = 20;
+
+    void Update()
+    {
+        if (Input.PressTag(PressWithHandTag)) // Press to buy
+        {
+            BuyAnimal();
+        }
+    }
+
+    void BuyAnimal()
+    {
+        if (money >= animalCost)
+        {
+            money -= animalCost;
+            Instantiate(animalPrefab, spawnPoint.position, Quaternion.identity);
+            Debug.Log("Animal bought! Money left: " + money);
+        }
+        else
+        {
+            Debug.Log("Not enough money!");
+        }
+    }
+}
